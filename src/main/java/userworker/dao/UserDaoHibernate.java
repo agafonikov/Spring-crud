@@ -33,7 +33,7 @@ public class UserDaoHibernate implements UserDao{
 
     @Override
     public void delete(User user) {
-        entityManager.detach(user);
+        entityManager.remove(user);
     }
 
     @Override
