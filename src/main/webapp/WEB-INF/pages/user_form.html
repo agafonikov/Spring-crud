@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:if="${error == true}">
+    <ul>
+        <li th:if="${empty_name != null}"><div th:text="${empty_name}"></div></li>
+        <li th:if="${empty_last_name != null}"><div th:text="${empty_last_name}"></div></li>
+    </ul>
+</div>
+<form method="post" th:action="@{${submit_url}}" th:object="${user}">
+    <label for="name">First name: <input type="text"  id="name" th:field="*{name}"><br>
+    <label for="last_name">Last name: </label><input type="text"id="last_name" th:field="*{lastName}"><br>
+    <input type="hidden" th:value="${user.getId()}" th:field="*{id}">
+    <input type="submit" th:value="${submit_text}" name="submit"><br>
+</form>
+</body>
+</html>
