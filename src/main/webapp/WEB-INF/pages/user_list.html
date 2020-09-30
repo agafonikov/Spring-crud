@@ -6,9 +6,12 @@
 </head>
 <body>
 <h2>Main page</h2>
+<div th:insert="~{logout :: copy}"></div>
 <table>
     <thead>
         <tr>
+            <td>Id</td>
+            <td>Username</td>
             <td>Name</td>
             <td>LastName</td>
             <td>Actions</td>
@@ -16,18 +19,20 @@
     </thead>
     <tbody>
     <tr th:each="user: ${users}">
+        <td th:text="${user.getId()}"></td>
+        <td th:text="${user.getUsername()}"></td>
         <td th:text="${user.getName()}"></td>
         <td th:text="${user.getLastName()}"></td>
         <td>
             <ul>
-                <li><a th:href="@{/update(id=${user.getId()})}">Change user info</a></li>
-                <li><a th:href="@{/delete(id=${user.getId()})}">Delete user</a></li>
+                <li><a th:href="@{/admin/update(id=${user.getId()})}">Change user info</a></li>
+                <li><a th:href="@{/admin/delete(id=${user.getId()})}">Delete user</a></li>
             </ul>
         </td>
     </tr>
     <tr>
-        <td>
-            <a th:href="@{/add}">Add new user</a>
+        <td colspan="4">
+            <a th:href="@{/admin/add}">Add new user</a>
         </td>
     </tr>
     </tbody>

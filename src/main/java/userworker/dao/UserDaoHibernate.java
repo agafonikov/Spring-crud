@@ -18,9 +18,6 @@ import java.util.List;
 @Transactional(isolation = Isolation.REPEATABLE_READ)
 public class UserDaoHibernate implements UserDao{
 
-    @Autowired
-    private SessionFactory sessionFactory;
-
     @PersistenceContext
     EntityManager entityManager;
 
@@ -28,7 +25,7 @@ public class UserDaoHibernate implements UserDao{
 
     @Override
     public void add(User user){
-        entityManager.persist(user);
+        entityManager.merge(user);
     }
 
     @Override
@@ -46,6 +43,14 @@ public class UserDaoHibernate implements UserDao{
         return entityManager
                 .createQuery("from User ")
                 .getResultList();
+    }
+
+    @Override
+    public User getByUsername(String username){
+        return (User) entityManager.
+                createQuery("from User where username = :username")
+                .setParameter("username", username)
+                .getSingleResult();
     }
 
     @Override

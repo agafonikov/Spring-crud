@@ -2,6 +2,9 @@ package userworker.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 import userworker.dao.UserDao;
 import userworker.model.User;
@@ -36,5 +39,10 @@ public class UserServiceImpl implements UserService{
     @Override
     public User getById(long id) {
         return dao.getById(id);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        return dao.getByUsername(s);
     }
 }
