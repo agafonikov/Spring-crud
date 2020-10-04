@@ -1,5 +1,6 @@
 package userworker.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -86,6 +88,15 @@ public class User implements UserDetails {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+//    public void setRoles(String[] roles) {
+//        Set<Role> new_roles = new HashSet<>();
+//        Arrays.stream(roles).forEach(x->{
+//            Role role = new Role();
+//            role.setRole(x);
+//            new_roles.add(role);
+//        });
+//    }
 
     public void setRole(String role) {
         Role s = new Role();

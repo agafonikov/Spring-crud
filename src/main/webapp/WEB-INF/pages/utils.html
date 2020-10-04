@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:th="http://www.w3.org/1999/xhtml"
+        xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<header th:fragment="header">
+    <nav class="navbar navbar-dark bg-dark h5 font-weight-light">
+        <div class="navbar-text text-light px-1 font-weight-bold" sec:authentication="name"></div>
+        <div class="navbar-text text-light d-inline-flex">
+            with roles:
+        <div class="navbar-nav justify-content-center ml-2">
+            <ul class="list-inline mb-0">
+                <li class="list-inline-item" th:each="authority : ${#authentication.getAuthorities()}" th:text="${authority.getAuthority()}"></li>
+            </ul>
+        </div>
+        </div>
+        <a class="navbar-text ml-auto font-weight-light" th:href="@{/logout}">Logout</a>
+    </nav>
+</header>
+
+<div th:fragment="head_imports">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/custom/main.css}">
+</div>
+
+<div th:fragment="js_imports">
+    <script th:src="@{/js/custom/main.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script th:src="@{/js/bootstrap.js}"></script>
+</div>
+</body>
+</html>

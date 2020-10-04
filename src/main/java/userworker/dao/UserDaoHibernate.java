@@ -20,18 +20,21 @@ public class UserDaoHibernate implements UserDao{
     public UserDaoHibernate(){}
 
     @Override
-    public void add(User user){
+    public User add(User user){
         entityManager.merge(user);
+        return user;
     }
 
     @Override
-    public void delete(User user) {
+    public User delete(User user) {
         entityManager.remove(user);
+        return user;
     }
 
     @Override
-    public void update(User user){
+    public User update(User user){
         entityManager.merge(user);
+        return user;
     }
 
     @Override

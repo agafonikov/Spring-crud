@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+<body>
+
+<div th:fragment="admin_panel" class="col-10 mt-3 ml-auto mr-5 float-right">
+    <h1 class="text-left">
+        Admin panel
+    </h1>
+    <ul class="nav nav-tabs card-header-tabs m-0 row">
+        <li class="nav-item">
+            <a class="nav-link active" href="#user_list" data-toggle="tab">Users table</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#new_user" data-toggle="tab">New User</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="row card m-0 tab-pane active" id="user_list">
+            <div class="card-header h4 font-weight-normal">All users</div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody id="user_list_body">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row card m-0 tab-pane fade" id="new_user">
+            <div class="card-header h4 font-weight-normal">Add new user</div>
+            <div class="card-body">
+                <form class="add-form" action="#">
+                    <div class="form-group d-flex flex-column col-4 m-auto align-items-center">
+                        <label for="n_username" class="form-check-label h5 font-weight-bold">Username</label>
+                        <input type="text" class="form-control mb-3" id="n_username" name="username">
+                        <label for="n_name" class="form-check-label h5 font-weight-bold">First name</label>
+                        <input type="text" class="form-control mb-3" id="n_name" name="name">
+                        <label for="n_lastName" class="form-check-label h5 font-weight-bold">Last name</label>
+                        <input type="text" class="form-control mb-3" id="n_lastName" name="lastName">
+                        <label for="n_roles" class="form-check-label h5 font-weight-bold">Roles</label>
+                        <select class="form-control mb-3" multiple name="roles" id="n_roles" size="2">
+                            <option>USER</option>
+                            <option>ADMIN</option>
+                        </select>
+                        <input type="submit" class="btn btn-success btn-lg p-2 pl-4 pr-4" id="add-button" value="Add new user" name="submit"><br>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+<div th:fragment="left_panel" class="col-2 h-100 mt-n2 ml-n3 mb-0 pr-5 position-absolute">
+    <ul class="list-group bg-white h-100 mt-0">
+        <li
+                class="list-group-item border-0"
+                th:classappend="${#strings.equals(page, 'user')} ? 'active' : ''"
+                sec:authorize="hasAnyAuthority('ADMIN', 'USER')"
+        >
+            <div th:switch="${page}">
+                <div th:case="'user'">User</div>
+                <a th:case="*" th:href="@{/user}">User</a>
+            </div>
+        </li>
+        <li
+                class="list-group-item border-0"
+                sec:authorize="hasAuthority('ADMIN')"
+                th:classappend="${#strings.equals(page, 'admin')} ? 'active' : ''"
+        >
+            <div th:switch="${page}">
+                <div th:case="'admin'">Admin</div>
+                <a th:case="*" th:href="@{/admin}">Admin</a>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<div th:fragment="modal" class="modal fade" id="editModal" tabindex="-1" role="form" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="form">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit user</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="edit-form" action="#">
+                <div class="modal-body form-group text-center">
+                    <label for="name">Id: </label>
+                    <input type="text" class="form-control" id="id" name="id"><br>
+                    <label for="name">Username: </label>
+                    <input type="text" class="form-control" id="username" name="username"><br>
+                    <label for="name">First name: </label>
+                    <input type="text" class="form-control" id="name" name="name"><br>
+                    <label for="lastName">Last name: </label>
+                    <input type="text" class="form-control" id="lastName" name="lastName"><br>
+                    <select multiple name="roles" size="2">
+                        <option>USER</option>
+                        <option>ADMIN</option>
+                    </select>
+                </div>
+                <div class="modal-footer form-group">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">Close</span>
+                    </button>
+                    <input type="submit" class="btn btn-primary submit" value="Edit" name="submit"><br>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="user_panel" class="col-10 mt-3 ml-auto mr-5 float-right">
+    <h1 class="text-left">
+        User information-page
+    </h1>
+        <div class="row card m-0 " id="user">
+            <div class="card-header h4 font-weight-normal">About user</div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Role</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <td th:text="${user.id}"></td>
+                        <td th:text="${user.username}"></td>
+                        <td th:text="${user.name}"></td>
+                        <td th:text="${user.lastName}"></td>
+                        <td>
+                            <div th:each="role : ${user.getAuthorities()}" class="role d-inline-block m-1">
+                                <div  th:text="${role.getAuthority()}"></div>
+                            </div>
+                        </td>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+</div>
+</body>
+</html>

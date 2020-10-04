@@ -16,7 +16,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @GetMapping(value = "/login")
     public String loginPage() {
         return "login";
     }
@@ -25,6 +25,6 @@ public class UserController {
     public String userInfo(Principal principal, ModelMap model){
         User user = (User) userService.loadUserByUsername(principal.getName());
         model.addAttribute("user", user);
-        return "user_info";
+        return "user";
     }
 }

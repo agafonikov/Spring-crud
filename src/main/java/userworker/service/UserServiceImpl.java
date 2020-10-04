@@ -17,18 +17,18 @@ public class UserServiceImpl implements UserService{
     private UserDao dao;
 
     @Override
-    public void add(User user) {
-        dao.add(user);
+    public User add(User user) {
+        return dao.add(user);
     }
 
     @Override
-    public void delete(User user) {
-        dao.delete(user);
+    public User delete(User user) {
+        return dao.delete(user);
     }
 
     @Override
-    public void update(User user) {
-        dao.update(user);
+    public User update(User user) {
+        return dao.update(user);
     }
 
     @Override

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>User page</title>
+    <div th:replace="utils :: head_imports"></div>
+</head>
+<body class="bg-light" th:with="page=${'user'}">
+<div th:replace="~{utils :: header}"></div>
+
+<div th:replace="~{panels :: left_panel}"></div>
+<div th:replace="~{panels :: user_panel}"></div>
+<div th:replace="~{utils :: js_imports}"></div>
+</body>
+</html>

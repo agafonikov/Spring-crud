@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title></title>
+    <link rel="stylesheet" href="../../css/bootstrap.css">
+    <link rel="stylesheet" href="../../css/custom/main.css">
+</head>
+<body class="bg-light">
+
+<header>
+    <nav class="navbar navbar-dark bg-dark h5 font-weight-light">
+        <strong class="navbar-text text-light px-1 font-weight-bold">username</strong>
+        <div class="navbar-text text-light d-inline-flex">
+            with roles:
+            <div class="navbar-nav justify-content-center ml-2">
+                <ul class="list-inline mb-0">
+                    <li class="list-inline-item">USER</li>
+                    <li class="list-inline-item">ADMIN</li>
+                </ul>
+        </div>
+        </div>
+        <a class="navbar-text ml-auto font-weight-light">Logout</a>
+    </nav>
+</header>
+
+<div>
+<div class="col-2  bg-white h-100 mt-n2 mb-0 ml-n3 pr-5 position-absolute">
+    <ul class="list-group h-100 mt-0">
+        <li class="list-group-item mt-3 border-0 active">
+            User
+        </li>
+        <li class="list-group-item border-0">
+            <a href="#">Admin</a>
+        </li>
+    </ul>
+</div>
+<div class="col-10 mt-3 ml-auto mr-5 float-right">
+    <h1 class="text-left">
+        User information page
+    </h1>
+    <ul class="nav nav-tabs card-header-tabs m-0 row">
+        <li class="nav-item">
+            <a class="nav-link active" href="#user_list" data-toggle="tab">Users table</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#new_user" data-toggle="tab">New User</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+    <div class="row card m-0 tab-pane fade" id="user_list">
+        <div class="card-header">About user</div>
+        <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="align-middle">3</td>
+                    <td class="align-middle">Ivan</td>
+                    <td class="align-middle">Ivanov</td>
+                    <td class="align-middle">24</td>
+                    <td class="align-middle">USER</td>
+                    <td><button type="button" class="btn btn-info edit-btn" data-toggle="modal" data-target="#editModal">Edit</button></td>
+                    <td><button type="button" class="btn btn-danger delete-btn" data-toggle="modal" data-target="#editModal">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+    <div class="row card m-0 tab-pane active" id="new_user">
+        <div class="card-header h4 font-weight-normal">Add new user</div>
+        <div class="card-body">
+            <form class="edit-form" action="#">
+                <div class="form-group d-flex flex-column col-4 m-auto align-items-center">
+                    <label for="n_username" class="form-check-label h5 font-weight-bold">Username</label>
+                    <input type="text" class="form-control mb-3" id="n_username" name="username">
+                    <label for="n_name" class="form-check-label h5 font-weight-bold">First name</label>
+                    <input type="text" class="form-control mb-3" id="n_name" name="name">
+                    <label for="n_lastName" class="form-check-label h5 font-weight-bold">Last name</label>
+                    <input type="text" class="form-control mb-3" id="n_lastName" name="lastName">
+                    <label for="n_roles" class="form-check-label h5 font-weight-bold">Roles</label>
+                    <select class="form-control mb-3" multiple name="roles" id="n_roles" size="2">
+                        <option>USER</option>
+                        <option>ADMIN</option>
+                    </select>
+                    <input type="submit" class="btn btn-success btn-lg submit p-2 pl-4 pr-4" value="Add new user" name="submit"><br>
+                </div>
+            </form>
+        </div>
+    </div>
+    </div>
+</div>
+</div>
+
+<!--MODAL EDIT-->
+<div class="modal fade" id="editModal" tabindex="-1" role="form" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="form">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit user</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post"  class="edit-form" th:action="@{${submit_url}}" th:object="${user}">
+                <div class="modal-body form-group text-center">
+                    <label for="name">Username: </label>
+                    <input type="text" class="form-control" id="username" th:field="*{username}"><br>
+                    <label for="name">Password: </label>
+                    <input type="text" class="form-control" id="password" th:field="*{password}"><br>
+                    <label for="name">First name: </label>
+                    <input type="text" class="form-control" id="name" th:field="*{name}"><br>
+                    <label for="last_name">Last name: </label>
+                    <input type="text" class="form-control" id="last_name" th:field="*{lastName}"><br>
+                    <input type="hidden" th:value="${user.getId()}" th:field="*{id}">
+                </div>
+                <div class="modal-footer form-group">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">Close</span>
+                    </button>
+                    <input type="submit" class="btn btn-primary submit" value="Edit" name="submit"><br>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="../../js/custom/main.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="../../js/bootstrap.js"></script>
+</body>
+</html>
