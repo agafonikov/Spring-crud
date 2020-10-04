@@ -5,9 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import userworker.model.User;
 import userworker.service.UserService;
@@ -20,14 +18,14 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
+    @GetMapping(value = "")
     public String mainPage(ModelMap model){
         List<User> users = userService.getAll();
         model.addAttribute("users", users);
         return "user_list";
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    @GetMapping(value = "/add")
     public ModelAndView addGet(){
         ModelAndView modelAndView = new ModelAndView("user_form");
         User user = new User();
@@ -37,7 +35,7 @@ public class AdminController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.GET)
+    @GetMapping(value = "/update")
     public ModelAndView updateGet(@ModelAttribute("id") long id){
         ModelAndView modelAndView = new ModelAndView("user_form");
         User user = userService.getById(id);
@@ -47,7 +45,7 @@ public class AdminController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @PostMapping(value = "/add")
     public ModelAndView addPost(@ModelAttribute("obj") @Validated User user, BindingResult result){
         if (result.hasErrors()) {
             ModelAndView modelAndView = new ModelAndView("user_form");
@@ -61,7 +59,7 @@ public class AdminController {
         }
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @PostMapping(value = "/update")
     public ModelAndView updatePost(@ModelAttribute("obj") @Validated User user, BindingResult result){
         if (result.hasErrors()) {
             ModelAndView modelAndView = new ModelAndView("user_form");
@@ -74,14 +72,14 @@ public class AdminController {
         }
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    @PostMapping(value = "/delete")
     public ModelAndView deleteGet(@ModelAttribute("id") long id){
         User user = userService.getById(id);
         userService.delete(user);
         return new ModelAndView("redirect:/admin");
     }
 
-    @RequestMapping("/form")
+    @GetMapping("/form")
     public String userForm(ModelMap model){
         return "user_form";
     }
