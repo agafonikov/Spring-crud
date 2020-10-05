@@ -9,23 +9,23 @@ import userworker.service.UserService;
 import java.util.*;
 
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/api/users")
 public class UserRestController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/users")
+    @GetMapping
     List<User> getAll(){
         return userService.getAll();
     }
 
 
-    @PostMapping(value = "/users")
+    @PostMapping
     User newUser(@RequestBody User user){
         return userService.add(user);
     }
 
-    @PutMapping("/users/")
+    @PutMapping
     User updateUser(@RequestBody User userUpdated){
         User user = userService.getById(userUpdated.getId());
         user.setUsername(userUpdated.getUsername());
@@ -36,7 +36,7 @@ public class UserRestController {
         return userService.update(user);
     }
 
-    @DeleteMapping("/users/")
+    @DeleteMapping
     User deleteUser(@RequestBody User user){
         return userService.delete(user);
     }
